@@ -4,27 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Principal"
+    tools:context=".DetalheLista"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Escolha um exemplo:"
+        android:textSize="80px"
+        android:text="TESTE"
         android:textAlignment="center"
-        android:id="@+id/textoTelaInicial"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Exemplo de Lista"
-        android:id="@+id/btnLista"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Exemplo de Lista Clique"
-        android:id="@+id/btnListaComClique"/>
-
+        android:id="@+id/textoDetalhe"/>
 
 </LinearLayout>

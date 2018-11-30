@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class Principal extends AppCompatActivity {
 
     Button btnLista;
+    Button btn2;
+    TextView textoTelaInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,14 @@ public class Principal extends AppCompatActivity {
                 abrirTelaLista();
             }
         });
+
+        btn2 = findViewById(R.id.btnListaComClique);
+
+        String aula;
+        aula = "TEXTO DE VARIAVEL:";
+        textoTelaInicial = findViewById(R.id.textoTelaInicial);
+        textoTelaInicial.setText(aula);
+
     }
 
     private void abrirTelaLista() {
