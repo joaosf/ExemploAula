@@ -6,15 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Lista"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Informe um texto:"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Texto Exemplo"
-        android:id="@+id/textoExemplo"/>
+        android:hint="Nome"
+        android:id="@+id/txtNome"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sobrenome"
+        android:id="@+id/txtSobrenome"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Idade"
+        android:id="@+id/txtIdade"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

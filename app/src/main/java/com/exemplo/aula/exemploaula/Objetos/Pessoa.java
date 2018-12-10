@@ -3,33 +3,23 @@ package com.exemplo.aula.exemploaula.Objetos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Pessoa implements Parcelable {
+public class Pessoa {
 
     String nome;
+    String sobrenome;
+    Integer idade;
 
     public Pessoa() {
 
     }
 
-    public Pessoa(String nome) {
-        this.nome = nome;
+    public Integer getIdade() {
+        return idade;
     }
 
-    protected Pessoa(Parcel in) {
-        nome = in.readString();
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
-
-    public static final Creator<Pessoa> CREATOR = new Creator<Pessoa>() {
-        @Override
-        public Pessoa createFromParcel(Parcel in) {
-            return new Pessoa(in);
-        }
-
-        @Override
-        public Pessoa[] newArray(int size) {
-            return new Pessoa[size];
-        }
-    };
 
     public String getNome() {
         return nome;
@@ -39,13 +29,11 @@ public class Pessoa implements Parcelable {
         this.nome = nome;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getSobrenome() {
+        return sobrenome;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(nome);
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 }

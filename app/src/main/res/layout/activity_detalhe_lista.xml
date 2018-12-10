@@ -7,12 +7,28 @@
     tools:context=".DetalheLista"
     android:orientation="vertical">
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="80px"
-        android:text="TESTE"
-        android:textAlignment="center"
-        android:id="@+id/textoDetalhe"/>
+        android:hint="Nome"
+        android:id="@+id/txtNomeEdit"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sobrenomes"
+        android:id="@+id/txtSobrenomeEdit"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Idade"
+        android:id="@+id/txtIdadeEdit"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:id="@+id/btnSalvar"/>
 
 </LinearLayout>

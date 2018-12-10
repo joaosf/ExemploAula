@@ -21,37 +21,25 @@ import java.util.List;
 public class Lista extends AppCompatActivity {
 
     ListView listView;
-    ArrayList<String> arrayList;
-    List<Pessoa> pessoaList;
     Button btnAddLista;
-    EditText campoTexto;
+    EditText campoNome;
+    EditText campoSobrenome;
+    EditText campoIdade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
-
-        arrayList = new ArrayList<>();
-        pessoaList = new ArrayList<>();
         listView = findViewById(R.id.list_item1);
         btnAddLista = findViewById(R.id.btnAddLista);
-        campoTexto = findViewById(R.id.textoExemplo);
-
-        campoTexto.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                //AQUI
-                if (i == KeyEvent.KEYCODE_ENTER) {
-                    adicionarTexto(campoTexto.getText().toString());
-                }
-                return false;
-            }
-        });
+        campoNome = findViewById(R.id.txtNome);
+        campoSobrenome = findViewById(R.id.txtSobrenome);
+        campoIdade = findViewById(R.id.txtIdade);
 
         btnAddLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adicionarTexto();
+                adicinarPessoa();
             }
         });
 
@@ -59,30 +47,54 @@ public class Lista extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int linha, long coluna) {
                 Intent tela = new Intent(getApplicationContext(), DetalheLista.class);
-                tela.putExtra("texto",arrayList.get(linha));
-                tela.putExtra("objeto", pessoaList.get(linha));
+                tela.putExtra("index", linha);
                 startActivity(tela);
             }
         });
     }
 
-    private void adicionarTexto() {
-        String textoTela = campoTexto.getText().toString();
-        adicionarTexto(textoTela);
+    public void adicinarPessoa() {
+        String nome = campoNome.getText().toString();
+        String sobrenome = campoSobrenome.getText().toString();
+        //Integer.parseInt = Converter uma String para inteiro
+        Integer idade = Integer.parseInt(campoIdade.getText().toString());
+
+        if ((!nome.trim().equals("")) && (!sobrenome.trim().equals(""))) {
+            Gerenciador.getInstance().getArrayList().add(nome);
+            // Definindo valores do meu Objeto Pessoa
+            Pessoa pessoa = new Pessoa();
+            pessoa.setNome(nome);
+            pessoa.setSobrenome(sobrenome);
+            pessoa.setIdade(idade);
+            //Salvando informações no Singleton
+            Gerenciador.getInstance().getPessoaList().add(pessoa);
+
+            // Limpando Campos em tela
+            campoNome.getText().clear();
+            campoSobrenome.getText().clear();
+            campoIdade.getText().clear();
+
+            //Criação do list adapter em tela
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, Gerenciador.getInstance().getArrayList());
+            listView.setAdapter(adapter);
+
+        } else if (nome.trim().equals("")) {
+            // Mostrando erro no campo em tela
+            campoNome.setError("Preencha esse campo!");
+        } else if (sobrenome.trim().equals("")) {
+            // Mostrando erro no campo em tela
+            campoSobrenome.setError("Preencha esse campo!");
+        }
     }
 
-    private void adicionarTexto(String textoTela) {
-        if (!textoTela.trim().equals("")) {
-            arrayList.add(textoTela);
-            Pessoa pessoa = new Pessoa();
-            pessoa.setNome(textoTela);
-            pessoaList.add(pessoa);
-            campoTexto.getText().clear();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, arrayList);
-            listView.setAdapter(adapter);
-        } else {
-            campoTexto.setError("Preencha esse campo!");
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Criação do list adapter em tela
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, Gerenciador.getInstance().getArrayList());
+        listView.setAdapter(adapter);
     }
 }
