@@ -17,6 +17,8 @@ public class Principal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+        Gerenciador.getInstance().setContext(this);
+
         btnLista = findViewById(R.id.btnLista);
         btnLista.setOnClickListener(new View.OnClickListener() {
             @Override

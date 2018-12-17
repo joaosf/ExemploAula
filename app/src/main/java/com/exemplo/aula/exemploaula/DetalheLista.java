@@ -24,6 +24,7 @@ public class DetalheLista extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe_lista);
+        Gerenciador.getInstance().setContext(this);
 
         //findViewById = buscar componente em tela
         campoNome = findViewById(R.id.txtNomeEdit);
@@ -37,7 +38,7 @@ public class DetalheLista extends AppCompatActivity {
 
         index = intent.getIntExtra("index",0);
         //Buscando informações no Singleton
-        pessoa = Gerenciador.getInstance().getPessoaList().get(index);
+        pessoa = Gerenciador.getInstance().getPessoa(index+1);
 
         campoNome.setText(pessoa.getNome());
         campoSobrenome.setText(pessoa.getSobrenome());
@@ -57,8 +58,7 @@ public class DetalheLista extends AppCompatActivity {
         //Integer.parseInt = Converter uma String para inteiro
         pessoa.setIdade(Integer.parseInt(campoIdade.getText().toString()));
 
-        Gerenciador.getInstance().getPessoaList().set(index,pessoa);
-        Gerenciador.getInstance().getArrayList().set(index,pessoa.getNome());
+        Gerenciador.getInstance().updPessoa(pessoa);
         finish();
     }
 }

@@ -30,6 +30,8 @@ public class Lista extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
+        Gerenciador.getInstance().setContext(this);
+
         listView = findViewById(R.id.list_item1);
         btnAddLista = findViewById(R.id.btnAddLista);
         campoNome = findViewById(R.id.txtNome);
@@ -60,14 +62,13 @@ public class Lista extends AppCompatActivity {
         Integer idade = Integer.parseInt(campoIdade.getText().toString());
 
         if ((!nome.trim().equals("")) && (!sobrenome.trim().equals(""))) {
-            Gerenciador.getInstance().getArrayList().add(nome);
             // Definindo valores do meu Objeto Pessoa
             Pessoa pessoa = new Pessoa();
             pessoa.setNome(nome);
             pessoa.setSobrenome(sobrenome);
             pessoa.setIdade(idade);
             //Salvando informações no Singleton
-            Gerenciador.getInstance().getPessoaList().add(pessoa);
+            Gerenciador.getInstance().addPessoa(pessoa);
 
             // Limpando Campos em tela
             campoNome.getText().clear();
@@ -76,7 +77,7 @@ public class Lista extends AppCompatActivity {
 
             //Criação do list adapter em tela
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, Gerenciador.getInstance().getArrayList());
+                    android.R.layout.simple_list_item_1, Gerenciador.getInstance().getNomeList());
             listView.setAdapter(adapter);
 
         } else if (nome.trim().equals("")) {
@@ -94,7 +95,7 @@ public class Lista extends AppCompatActivity {
 
         //Criação do list adapter em tela
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, Gerenciador.getInstance().getArrayList());
+                android.R.layout.simple_list_item_1, Gerenciador.getInstance().getNomeList());
         listView.setAdapter(adapter);
     }
 }
