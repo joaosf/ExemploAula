@@ -40,9 +40,52 @@ public class Gerenciador {
         context = pCtx;
     }
 
-    public void addPessoa(Pessoa pessoa) {
-        DatabaseReference dados = Base.getTableReference("pessoas",false);
-        dados.push().setValue(pessoa);
+    public Context getContext() {
+        return context;
+    }
+
+    public void deletePessoa(String nomePessoa) {
+        Query consulta = Base.getQuery("pessoas","nome", nomePessoa);
+        consulta.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        DatabaseReference dados = Base.getTableReference("pessoas/"+postSnapshot.getKey(),false);
+                        dados.setValue(null);
+                    }
+                    atualizarLista();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void addPessoa(final Pessoa pessoa) {
+        Query consulta = Base.getQuery("pessoas","nome", pessoa.getNome());
+        consulta.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        DatabaseReference dados = Base.getTableReference("pessoas/"+postSnapshot.getKey(),false);
+                        dados.setValue(pessoa);
+                    }
+                } else {
+                    DatabaseReference dados = Base.getTableReference("pessoas",false);
+                    dados.push().setValue(pessoa);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void updPessoa(String nomePessoa, final Pessoa pessoa) {
@@ -77,7 +120,7 @@ public class Gerenciador {
     }
 
     public void atualizarLista() {
-        Query consulta = Base.getQuery("pessoas","nomePessoa", "");
+        Query consulta = Base.getQuery("pessoas","nome", "");
         consulta.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,7 +132,6 @@ public class Gerenciador {
 
                     for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         listPessoas.add(postSnapshot.getValue(Pessoa.class));
-
                     }
 
                     for (int i = 0; i < listPessoas.size(); i++) {
@@ -98,7 +140,7 @@ public class Gerenciador {
                 }
 
                 //Criação do list adapter em tela
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
                         android.R.layout.simple_list_item_1, listNomePessoas);
                 listView.setAdapter(adapter);
             }

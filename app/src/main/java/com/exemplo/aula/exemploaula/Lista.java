@@ -1,9 +1,12 @@
 package com.exemplo.aula.exemploaula;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.exemplo.aula.exemploaula.Objetos.Pessoa;
 
@@ -54,6 +58,24 @@ public class Lista extends AppCompatActivity {
                 String data = adapterView.getItemAtPosition(linha).toString();
                 tela.putExtra("nomePessoa", data);
                 startActivity(tela);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final String nomePessoa = ((TextView) view).getText().toString();
+                AlertDialog.Builder alert = new AlertDialog.Builder(Gerenciador.getInstance().getContext())
+                        .setTitle("Tem certeza que deseja excluir?")
+                        .setCancelable(false)
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Gerenciador.getInstance().deletePessoa(nomePessoa);
+                            }
+                        })
+                        .setNegativeButton("Não",null);
+                alert.show();
+                return false;
             }
         });
     }
