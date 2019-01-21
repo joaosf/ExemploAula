@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "217316985050",
+    "firebase_url": "https://exemploaula-ee366.firebaseio.com",
+    "project_id": "exemploaula-ee366",
+    "storage_bucket": "exemploaula-ee366.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217316985050:android:39442f28b4091a65",
+        "android_client_info": {
+          "package_name": "com.exemplo.aula.exemploaula"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217316985050-ra75nn92eqv7kmveguf9rvmrvbiiv21u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj8iAGarP8vUvdtkrkxTEje6hK6JvUWCA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

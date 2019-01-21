@@ -30,7 +30,6 @@ public class Lista extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
-        Gerenciador.getInstance().setContext(this);
 
         listView = findViewById(R.id.list_item1);
         btnAddLista = findViewById(R.id.btnAddLista);
@@ -38,10 +37,13 @@ public class Lista extends AppCompatActivity {
         campoSobrenome = findViewById(R.id.txtSobrenome);
         campoIdade = findViewById(R.id.txtIdade);
 
+        Gerenciador.getInstance().setContext(this);
+        Gerenciador.getInstance().setListView(listView);
+
         btnAddLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adicinarPessoa();
+                adicionarPessoa();
             }
         });
 
@@ -49,17 +51,25 @@ public class Lista extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int linha, long coluna) {
                 Intent tela = new Intent(getApplicationContext(), DetalheLista.class);
-                tela.putExtra("index", linha);
+                String data = adapterView.getItemAtPosition(linha).toString();
+                tela.putExtra("nomePessoa", data);
                 startActivity(tela);
             }
         });
     }
 
-    public void adicinarPessoa() {
+    public void adicionarPessoa() {
         String nome = campoNome.getText().toString();
         String sobrenome = campoSobrenome.getText().toString();
+        Integer idade;
         //Integer.parseInt = Converter uma String para inteiro
-        Integer idade = Integer.parseInt(campoIdade.getText().toString());
+        try {
+            idade = Integer.parseInt(campoIdade.getText().toString());
+        } catch (Exception ex) {
+            campoIdade.setError("Campo inválido!");
+            return;
+        }
+
 
         if ((!nome.trim().equals("")) && (!sobrenome.trim().equals(""))) {
             // Definindo valores do meu Objeto Pessoa
@@ -75,10 +85,7 @@ public class Lista extends AppCompatActivity {
             campoSobrenome.getText().clear();
             campoIdade.getText().clear();
 
-            //Criação do list adapter em tela
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, Gerenciador.getInstance().getNomeList());
-            listView.setAdapter(adapter);
+            Gerenciador.getInstance().atualizarLista();
 
         } else if (nome.trim().equals("")) {
             // Mostrando erro no campo em tela
@@ -92,10 +99,6 @@ public class Lista extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        //Criação do list adapter em tela
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, Gerenciador.getInstance().getNomeList());
-        listView.setAdapter(adapter);
+        Gerenciador.getInstance().atualizarLista();
     }
 }
